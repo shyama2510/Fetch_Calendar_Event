@@ -34,22 +34,16 @@ git clone https://github.com/shyama2510/Fetch_Calendar_Event.git
 
 ## 2. Install Dependencies
 
-Install the necessary dependencies for both the server and the frontend.
-
-### Server Side:
-
-1. cd server
-2. npm i
-3. npm install google-auth-library
-4. npm start
-
-### Frontend Side (in Parallel Terminal):
-
-1. cd frontend
-2. npm i
-3. npm start
+npm i
 
 ## 3. Set Up Environment Variables
 
 Create a .env file in the root directory and add the following environment variables:
-1. cd fetch
+
+1. SESSION_SECRET="SECRET_HERE"
+2. CLIENT_ID=YOUR CLIENT_ID
+3. CLIENT_SECRET=YOUR CLIENT_SECRET
+
+## 4. Start the project
+
+npm start
