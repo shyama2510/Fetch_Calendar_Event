@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .login-container {
+      margin-top: 100px;
+    }
+
+    button {
+      background-color: #4285F4; /* Google Blue */
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #357AE8;
+    }
+
+    button a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    button a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Welcome to Our Platform</h1>
+    <p>Please login to continue</p>
+    <button>
+      <a href='/auth/google'>Login With Google</a>
+    </button>
+  </div>
+</body>
+</html>

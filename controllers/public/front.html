@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event List</title>
+  <style>
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    .controls {
+      width: 80%;
+      margin: 20px auto;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">All Events</h1>
+  
+  <div class="controls">
+    <label for="filterDate">Filter by Date:</label>
+    <input type="date" id="filterDate" onchange="filterEventsByDate(this.value)">
+  </div>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Event Summary</th>
+        <th>Date & Time</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody id="eventTableBody">
+      <!-- Data will be injected here -->
+    </tbody>
+  </table>
+
+  <script>
+    let eventList = []; // Global variable to store the fetched event list
+
+    // Fetch events from the API
+    function fetchEvents() {
+      fetch('/api/events')
+        .then(response => response.json())
+        .then(data => {
+          eventList = data; // Store events in the global variable
+          renderEvents(eventList); // Initial render
+        })
+        .catch(error => console.error('Error fetching events:', error));
+    }
+
+    // Render events in the table
+    function renderEvents(events) {
+      const tableBody = document.getElementById('eventTableBody');
+      tableBody.innerHTML = ''; // Clear the table body
+
+      if (events.length === 0) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.setAttribute('colspan', 3);
+        cell.textContent = 'No events found for the selected date.';
+        cell.style.textAlign = 'center';
+        row.appendChild(cell);
+        tableBody.appendChild(row);
+        return;
+      }
+
+      events.forEach(event => {
+        const row = document.createElement('tr');
+
+        // Event summary
+        const summaryCell = document.createElement('td');
+        summaryCell.textContent = event.summary || 'No Summary';
+        row.appendChild(summaryCell);
+
+        // Date & time
+        const dateTimeCell = document.createElement('td');
+        dateTimeCell.textContent = event.start?.dateTime
+          ? new Date(event.start.dateTime).toLocaleString()
+          : 'No Date/Time';
+        row.appendChild(dateTimeCell);
+
+        // Location
+        const locationCell = document.createElement('td');
+        locationCell.textContent = event.location || 'Virtual';
+        row.appendChild(locationCell);
+
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Function to filter events for the selected date
+    function filterEventsByDate(inputDate) {
+      if (!inputDate) {
+        renderEvents([]); // Clear the table if no date is selected
+        return;
+      }
+
+      // Convert inputDate to a comparable string (yyyy-mm-dd)
+      const selectedDate = new Date(inputDate).toISOString().split('T')[0];
+
+      // Filter events that match the selected date
+      const filteredEvents = eventList.filter(event => {
+        if (event.start?.dateTime) {
+          const eventDate = new Date(event.start.dateTime).toISOString().split('T')[0];
+          return eventDate === selectedDate;
+        }
+        return false;
+      });
+
+      // Render only the filtered events
+      renderEvents(filteredEvents);
+    }
+
+    // Fetch events when the page loads
+    fetchEvents();
+  </script>
+</body>
+</html>
