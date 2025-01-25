@@ -19,6 +19,6 @@ const userRoutes = require('./routes/userRoute');
 
 app.use('/',userRoutes);
 
-app.listen(3000 , () => { 
-	console.log("Server Running on port 3000"); 
+app.listen(PORT , () => { 
+	console.log(`Server Running on port ${PORT}`); 
 });
