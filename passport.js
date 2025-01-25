@@ -16,7 +16,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID, // Your Credentials here.
       clientSecret: process.env.CLIENT_SECRET, // Your Credentials here.
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "https://fetch-calendar-event.onrender.com/auth/google/callback",
       passReqToCallback: true,
     },
     function (request, accessToken, refreshToken, profile, done) {
