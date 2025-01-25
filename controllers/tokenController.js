@@ -20,6 +20,12 @@ async function listEvents(auth) {
       pageToken = response.data.nextPageToken; // Update the token for the next page (if available)
     } while (pageToken); // Continue fetching if there's more data
 
+     allEvents.sort((a, b) => {
+      const dateA = new Date(a.start.dateTime || a.start.date).getTime();
+      const dateB = new Date(b.start.dateTime || b.start.date).getTime();
+      return dateB - dateA; // Descending order
+    });
+
     return allEvents;
   } catch (error) {
     throw new Error("Error fetching events: " + error.message);
