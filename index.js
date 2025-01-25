@@ -11,7 +11,7 @@ app.use(session({
     saveUninitialized: true,
     secret: process.env.SESSION_SECRET 
 }));
-
+const PORT=process.env.PORT ||3000
 app.set('view engine', 'ejs');
 
 //setting up routes
